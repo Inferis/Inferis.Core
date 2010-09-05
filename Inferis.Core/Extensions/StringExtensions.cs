@@ -1,9 +1,27 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace Inferis.Core.Extensions
 {
     public static class StringExtensions
     {
+        public static string StripNonValidXmlCharacters(this string source)
+        {
+            var result = new StringBuilder(); // Used to hold the output.
+
+            if (string.IsNullOrEmpty(source)) return source; // vacancy test.
+            foreach (var current in source) {
+                if ((current == 0x9) ||
+                    (current == 0xA) ||
+                    (current == 0xD) ||
+                    ((current >= 0x20) && (current <= 0xD7FF)) ||
+                    ((current >= 0xE000) && (current <= 0xFFFD)) ||
+                    ((current >= 0x10000) && (current <= 0x10FFFF)))
+                    result.Append(current);
+            }
+            return result.ToString();
+        }
+
         public static string MD5(this string source)
         {
             if (string.IsNullOrEmpty(source))
@@ -13,8 +31,7 @@ namespace Inferis.Core.Extensions
             byte[] bs = Encoding.UTF8.GetBytes(source);
             bs = x.ComputeHash(bs);
             var s = new StringBuilder();
-            foreach (var b in bs)
-            {
+            foreach (var b in bs) {
                 s.Append(b.ToString("x2").ToLower());
             }
             return s.ToString();
@@ -26,10 +43,8 @@ namespace Inferis.Core.Extensions
                 return source;
 
             var result = new StringBuilder((int)(source.Length * 1.5));
-            foreach (var c in source)
-            {
-                if (char.IsUpper(c))
-                {
+            foreach (var c in source) {
+                if (char.IsUpper(c)) {
                     if (result.Length > 0)
                         result.Append('_');
                     result.Append(char.ToLower(c));
@@ -66,15 +81,12 @@ namespace Inferis.Core.Extensions
             var arrayIndex = 0;
             var inside = false;
 
-            foreach (var let in html)
-            {
-                if (let == '<')
-                {
+            foreach (var let in html) {
+                if (let == '<') {
                     inside = true;
                     continue;
                 }
-                if (let == '>')
-                {
+                if (let == '>') {
                     inside = false;
                     continue;
                 }
