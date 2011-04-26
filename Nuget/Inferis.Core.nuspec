@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Inferis.Core</id>
+    <version>1.0</version>
+    <authors>Tom Adriaenssen</authors>
+    <owners>Tom Adriaenssen</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Inferis.Core Package. Some basic core functionality.</description>
+    <tags>Inferis</tags>
+  </metadata>
+</package>
